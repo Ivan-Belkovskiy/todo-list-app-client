@@ -1,0 +1,14 @@
+:root, * {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100vw;
+    text-align: center;
+    justify-content: center;
+}
+
+.container * {
+    margin: 20px 0;
+}
