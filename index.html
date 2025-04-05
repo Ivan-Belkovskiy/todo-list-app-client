@@ -10,7 +10,43 @@
     <div class="container">
         <h1>ToDo-List App</h1>
         <hr>
-        <!-- <div class="task-list"></div> -->
+        <div class="task-list">
+            <h3>Все актуальные задачи:</h3>
+            <div class="task-list__content">
+                <div class="task-list__task">
+                    <div class="task-list__task_input--container">
+                        <span>Название задачи:</span>
+                        <input type="text" class="task-list__task_input">
+                    </div>
+                    <div class="task-list__task_input--container">
+                        <span>Приоритет:</span>
+                        <select name="" id="" class="task-list__task_select">
+                            <option value="low" class="task-list__task_select-option">Низкий</option>
+                            <option value="medium" class="task-list__task_select-option">Средний</option>
+                            <option value="high" class="task-list__task_select-option">Высокий</option>
+                        </select>
+                    </div>
+                    <div class="task-list__task_input--container">
+                        <span>Категория:</span>
+                        <select name="" id="" class="task-list__task_select">
+                            <option value="all-tasks" class="task-list__task_select-option">Все задачи</option>
+                            <option value="add-new-category" class="task-list__task_select-option">+ Добавить категорию</option>
+                        </select>
+                    </div>
+                    <div class="task-list__task_input--container">
+                        <span>Периодичность выполнения:</span>
+                        <select name="" id="" class="task-list__task_select">
+                            <option value="no-repeat" class="task-list__task_select-option">Один раз</option>
+                            <option value="advanced-repeat" class="task-list__task_select-option">Установить период и повторения...</option>
+                        </select>
+                    </div>
+                    <button class="task-list__task_button notification_settings_button">Настройки уведомления</button>
+                    <br>
+                    <br>
+                    <button class="task-list__task_button add_task_button">Добавить задачу</button>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="./js/main.js"></script>
 </body>

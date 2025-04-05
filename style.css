@@ -1,14 +1,52 @@
-:root, * {
+:root,
+* {
     margin: 0;
     padding: 0;
 }
 
 .container {
     width: 100vw;
-    text-align: center;
+    display: flex;
     justify-content: center;
+    flex-direction: column;
 }
 
-.container * {
+.container h1 {
     margin: 20px 0;
+    text-align: center;
+}
+
+.task-list {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.task-list h3 {
+    margin: 20px 0;
+}
+
+.task-list__content {
+    min-width: 60%;
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+}
+
+.task-list__task {
+    margin-top: 10px;
+    border: 1px solid #000;
+    padding: 20px 40px;
+}
+
+.task-list__task_input--container {
+    display: inline-block;
+    margin: 0 5px;
+}
+
+input,
+button,
+select {
+    cursor: pointer;
 }
