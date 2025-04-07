@@ -5,39 +5,57 @@ class CheckboxSelect extends HTMLElement {
     private valueElement: HTMLDivElement = document.createElement('div');
     private optionContainer: HTMLDivElement = document.createElement('div');
     private isWidthFixed: boolean = false;
-    private observer: MutationObserver | null = null;
+    private originalOptions: Array<HTMLOptionElement>;
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.isWidthFixed = this.hasAttribute('width');
+        // this.isWidthFixed = this.hasAttribute('width');
         // this.addEventListener('click', () => {\
         // console.log('Checkbox Select Created!');
         // console.log(this.querySelectorAll('option'));
         // console.log(this.innerHTML);
         this.isExpanded = false;
         this.selectedOptions = [];
+        this.originalOptions = Array.from(this.querySelectorAll('option'));
         if (!this.shadowRoot) return;
         this.initElement();
-
-        this.observer = new MutationObserver(() => (this.shadowRoot) ? this.initElement(this.isExpanded) : null);
-        this.observer.observe(this, {
-            childList: true,
-            subtree: true
-        })
-        // this.shadowRoot.innerHTML = `
-        // <div>CheckBox Select</div>
-        // `;
-        // });
+        this.valueElement.addEventListener('mousedown', () => {
+            if (this.isExpanded == false) {
+                this.optionContainer.style.display = '';
+                this.optionContainer.style.zIndex = '4';
+                this.isExpanded = true;
+                this.dispatchEvent(new CustomEvent('expanded'));
+            } else {
+                this.optionContainer.style.display = 'none';
+                this.optionContainer.style.zIndex = '';
+                this.isExpanded = false;
+                this.dispatchEvent(new CustomEvent('collapsed'));
+            }
+        });
+        window.addEventListener('mousedown', (e: MouseEvent) => {
+            // if (!(e.target instanceof CheckboxSelect)) {
+            if ((e.target as CheckboxSelect) != this) {
+                this.optionContainer.style.display = 'none';
+                this.optionContainer.style.zIndex = '';
+                this.isExpanded = false;
+                this.dispatchEvent(new CustomEvent('collapsed'));
+            }
+        });
     }
 
     private initElement(expanded?: boolean): void {
+        this.isWidthFixed = this.hasAttribute('width');
         if (!this.shadowRoot) return;
-        // this.optionContainer.innerHTML = '';
+        this.selectedOptions = [];
+        if (expanded == true) {
+            this.isExpanded = true;
+            this.setAttribute('expanded', 'true');
+        } else {
+            this.isExpanded = false
+            this.removeAttribute('expanded');
+        };
+        // alert(this.isExpanded);
         this.mainWrapper.innerHTML = '';
-        if (expanded) {
-            this.setAttribute('expanded', String(expanded));
-            this.isExpanded = expanded;
-        }
         this.mainWrapper.style.display = 'inline-block';
         this.mainWrapper.style.border = '1px solid #727272';
         this.mainWrapper.style.borderRadius = '2px';
@@ -53,47 +71,52 @@ class CheckboxSelect extends HTMLElement {
         this.shadowRoot.appendChild(this.mainWrapper);
         this.mainWrapper.appendChild(this.valueElement);
         this.mainWrapper.style.cursor = 'pointer';
-        console.log('This.innerHTML!');
-        console.log(this.innerHTML);
-        const width: number = this.initOptions(this.mainWrapper);
-        this.mainWrapper.style.width = (this.isWidthFixed && typeof this.getAttribute('width') === 'string') ? String(this.getAttribute('width')) + 'px' : ((width + 10) + 'px');
+        const width: number = this.initOptions(this.mainWrapper, this.originalOptions, true);
+        // Длинное название новой созданной категории
+        if ((this.isWidthFixed && typeof this.getAttribute('width') === 'string') /* Добавить проверку на то, чтобы длина самой большой опции не превышала фиксированной длины */) {
+            this.mainWrapper.style.width = String(this.getAttribute('width')) + 'px';
+        } else {
+            this.mainWrapper.style.width = (width + 10) + 'px';
+        }
+        // this.mainWrapper.style.width = (this.isWidthFixed && typeof this.getAttribute('width') === 'string') ? String(this.getAttribute('width')) + 'px' : ((width + 10) + 'px');
         this.mainWrapper.style.padding = '0 5px';
 
-        this.valueElement.addEventListener('mousedown', () => {
-            if (this.isExpanded == false) {
-                this.optionContainer.style.display = '';
-                this.optionContainer.style.zIndex = '4';
-                this.isExpanded = true;
-                this.dispatchEvent(new CustomEvent('expanded'));
-            } else {
-                this.optionContainer.style.display = 'none';
-                this.optionContainer.style.zIndex = '';
-                this.isExpanded = false;
-            }
-        });
-        window.addEventListener('mousedown', (e: MouseEvent) => {
-            // if (!(e.target instanceof CheckboxSelect)) {
-            if ((e.target as CheckboxSelect) != this) {
-                this.optionContainer.style.display = 'none';
-                this.optionContainer.style.zIndex = '';
-                this.isExpanded = false;
-            }
-        });
+        // this.valueElement.addEventListener('mousedown', () => {
+        //     if (this.isExpanded == false) {
+        //         this.optionContainer.style.display = '';
+        //         this.optionContainer.style.zIndex = '4';
+        //         this.isExpanded = true;
+        //         this.dispatchEvent(new CustomEvent('expanded'));
+        //     } else {
+        //         this.optionContainer.style.display = 'none';
+        //         this.optionContainer.style.zIndex = '';
+        //         this.isExpanded = false;
+        //     }
+        // });
+        // window.addEventListener('mousedown', (e: MouseEvent) => {
+        //     // if (!(e.target instanceof CheckboxSelect)) {
+        //     if ((e.target as CheckboxSelect) != this) {
+        //         this.optionContainer.style.display = 'none';
+        //         this.optionContainer.style.zIndex = '';
+        //         this.isExpanded = false;
+        //     }
+        // });
+
         if (!this.hasAttribute('expanded')) {
             this.optionContainer.style.display = 'none';
             this.optionContainer.style.zIndex = '';
             this.isExpanded = false;
         }
+        // this.shadowRoot.innerHTML = `
+        // <div>CheckBox Select</div>
+        // `;
+        // });
     }
 
-    private initOptions(shadowRoot: ShadowRoot | HTMLElement, refreshOptions?: boolean): number {
-        // if (refreshOptions) {
-        //     this.optionContainer.innerHTML = ''; // Очищаем innerHTML для повторного рендеринга опций
-        // }
-        console.log('Init Options!');
+    private initOptions(shadowRoot: ShadowRoot | HTMLElement, options: NodeListOf<HTMLOptionElement> | Array<HTMLOptionElement>, refresh?: boolean): number {
         let resultWidth: number = 5; // Отступы для красоты
-        const options: NodeListOf<HTMLOptionElement> = this.querySelectorAll('option');
-        console.log(options);
+        if (refresh) this.optionContainer.innerHTML = '';
+        // const options: NodeListOf<HTMLOptionElement> = this.querySelectorAll('option');
         this.optionContainer.style.position = 'absolute';
         this.optionContainer.style.display = 'inline-block';
         this.optionContainer.style.backgroundColor = '#ffffff';
@@ -118,46 +141,34 @@ class CheckboxSelect extends HTMLElement {
             checkbox.disabled = option.disabled;
             checkbox.id = `checkbox-select-option${index}`;
             (checkbox.checked) ? this.selectedOptions.push(option) : (this.selectedOptions.includes(option)) ? this.selectedOptions.splice(this.selectedOptions.indexOf(option), 1) : null;
-            // container.htmlFor = checkbox.id;
+            container.htmlFor = checkbox.id;
             option.style.display = 'inline-block';
-            // option.id = String(index);
+            option.id = String(index);
             checkbox.addEventListener('change', (e: Event) => {
                 (checkbox.checked) ? this.selectedOptions.push(option) : this.selectedOptions.splice(this.selectedOptions.indexOf(option), 1);
+                option.selected = checkbox.checked;
                 this.updateSelectedOptions();
                 this.dispatchEvent(new CustomEvent('option-click', {
                     detail: {
-                        optionElement: option,
                         optionType: (option.hasAttribute('button')) ? 'button' : 'checkbox',
                         value: option.value
                     }
                 }));
             });
             if (option.hasAttribute('button')) {
-                // container.addEventListener('click', () => {
-                //     this.dispatchEvent(new CustomEvent('option-click', {
-                //         detail: {
-                //             optionElement: option,
-                //             optionType: (option.hasAttribute('button')) ? 'button' : 'checkbox',
-                //             value: option.value
-                //         }
-                //     }));
-                // });
-            } else {
-                container.appendChild(checkbox);
-            }
-            container.appendChild(option);
-            if (option.hasAttribute('button')) {
                 container.addEventListener('click', () => {
                     this.dispatchEvent(new CustomEvent('option-click', {
                         detail: {
-                            optionElement: option,
                             optionType: (option.hasAttribute('button')) ? 'button' : 'checkbox',
                             value: option.value
                         }
                     }));
                 });
                 // container.style.padding = '0 5px';
+            } else {
+                container.appendChild(checkbox);
             }
+            container.appendChild(option);
             this.optionContainer.appendChild(container);
             // option.addEventListener('click', () => {
             // result += option.offsetWidth;
@@ -203,6 +214,22 @@ class CheckboxSelect extends HTMLElement {
             <div style="width: 20px; /* background-color: blue */; text-align: right;">▼</div>
         `;
         this.valueElement.title = (this.isWidthFixed) ? selectedOptionText.join(', ') : '';
+    }
+
+    public addNewOption(opt: HTMLOptionElement): void {
+        // alert('OPTION ADDED!');
+        // console.log('originalOptions:');
+        // console.log(...this.originalOptions);
+        if ((!opt || !this.shadowRoot)) return;
+        if (this.originalOptions.some((option) => {
+            return option.text == opt.text || option.value == opt.value;
+        })) {
+            alert('Категория уже существует!');
+            return;
+        }
+        this.originalOptions.push(opt);
+        this.originalOptions.sort((a, b) => (a.hasAttribute('bottom') ? 1 : 0) - (b.hasAttribute('bottom') ? 1 : 0));
+        this.initElement(this.isExpanded);
     }
 }
 

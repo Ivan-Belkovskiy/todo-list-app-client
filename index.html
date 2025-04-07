@@ -34,11 +34,7 @@
                         </select> -->
                         <checkbox-select name="" id="" width="200">
                             <option value="all-tasks" selected disabled>Все задачи</option>
-                            <!-- <option value="option-02">Категория №1</option> -->
-                            <!-- <option value="option-03">Категория №2</option>
-                            <option value="option-04">Категория №3</option>
-                            <option value="option-05">Категория №4</option> -->
-                            <option value="add-new-category" button>+ Добавить категорию</option>
+                            <option value="add-new-category" button bottom>+ Добавить категорию</option>
                         </checkbox-select>
                     </div>
                     <div class="task-list__task_input--container">
@@ -90,6 +86,13 @@
             if (e.detail.optionType == 'button') {
                 switch (e.detail.value) {
                     case 'add-new-category': {
+                        const data = prompt('Добавить категорию:: Введите название категории!');
+                        const opt = document.createElement('option');
+                        opt.value = data || 'new-option';
+                        opt.text = data || 'Новая категория';
+                        console.log(checkboxSelect.shadowRoot.innerHTML);
+                        checkboxSelect.addNewOption(opt);
+                        // checkboxSelect.shadowRoot.querySelector('div').querySelectorAll('div')[3].appendChild(opt);
                         // Добавить код для запроса на сервер для создания новой категории
                     }
                 }
