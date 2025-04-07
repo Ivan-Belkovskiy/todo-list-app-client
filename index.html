@@ -28,10 +28,18 @@
                     </div>
                     <div class="task-list__task_input--container">
                         <span>Категория:</span>
-                        <select name="" id="" class="task-list__task_select">
+                        <!-- <select name="" id="" class="task-list__task_select">
                             <option value="all-tasks" class="task-list__task_select-option">Все задачи</option>
                             <option value="add-new-category" class="task-list__task_select-option">+ Добавить категорию</option>
-                        </select>
+                        </select> -->
+                        <checkbox-select name="" id="" width="200">
+                            <option value="all-tasks" selected disabled>Все задачи</option>
+                            <!-- <option value="option-02">Категория №1</option> -->
+                            <!-- <option value="option-03">Категория №2</option>
+                            <option value="option-04">Категория №3</option>
+                            <option value="option-05">Категория №4</option> -->
+                            <option value="add-new-category" button>+ Добавить категорию</option>
+                        </checkbox-select>
                     </div>
                     <div class="task-list__task_input--container">
                         <span>Периодичность выполнения:</span>
@@ -76,5 +84,20 @@
         </div>
     </div>
     <script src="./dist/components/checkbox-select.js"></script>
+    <script>
+        const checkboxSelect = document.querySelector('checkbox-select');
+        checkboxSelect.addEventListener('option-click', (e) => {
+            if (e.detail.optionType == 'button') {
+                switch (e.detail.value) {
+                    case 'add-new-category': {
+                        // Добавить код для запроса на сервер для создания новой категории
+                    }
+                }
+            }
+        });
+        // checkboxSelect.addEventListener('expanded', () => {
+            // Доработать событие Expanded в checkbox-select.ts !!!
+        // });
+    </script>
 </body>
 </html>
