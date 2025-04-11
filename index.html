@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
     <title>ToDo-List App</title>
 </head>
+
 <body>
     <div class="container">
         <h1>ToDo-List App</h1>
@@ -41,7 +43,8 @@
                         <span>Периодичность выполнения:</span>
                         <select name="" id="" class="task-list__task_select">
                             <option value="no-repeat" class="task-list__task_select-option">Один раз</option>
-                            <option value="advanced-repeat" class="task-list__task_select-option">Установить период и повторения...</option>
+                            <option value="advanced-repeat" class="task-list__task_select-option">Установить период и
+                                повторения...</option>
                         </select>
                     </div>
                     <div class="task-list__task_input--container">
@@ -72,11 +75,16 @@
                         </select> -->
                     </div>
                     <!-- Доработать компонент ModalWindow -->
-                    <modal-window class="task-list_task-modal set-complete-options-modal" modal-title="Установить условия выполнения задачи" type="modal" color="#ffffff" open-button="#set-complete-options" opened>
+                    <modal-window class="task-list_task-modal set-complete-options-modal"
+                        modal-title="Установить условия выполнения задачи" type="modal" color="#ffffff"
+                        open-button="#set-complete-options" opened>
                         <div style="position: relative;">
-                            <input type="text" name="" id="" placeholder="Введите &quot;Задача выполнена&quot; для подтверждения!" style="width: 350px;" disabled>
+                            <input type="text" name="" id=""
+                                placeholder="Введите &quot;Задача выполнена&quot; для подтверждения!"
+                                style="width: 350px;" disabled>
                             <span> - </span>
-                            <span style="color: #ff0000">Это поле обязательное для заполнения при выполнении задачи!</span>
+                            <span style="color: #ff0000">Это поле обязательное для заполнения при выполнении
+                                задачи!</span>
                             <div style="
                                 border: solid 2px #000000;
                                 padding: 5px 0;
@@ -88,26 +96,28 @@
                                 ">Добавить новое условие:</span>
                                 <div>
                                     <span>Тип элемента:</span>
-                                    <select>
+                                    <custom-select type="normal" id="element-type">
                                         <option value="text-field">Текстовое поле</option>
                                         <option value="number-field">Числовое поле</option>
-                                    </select>
+                                    </custom-select>
                                     <!-- <checkbox-select>
                                         <option value="text-field">Текстовое поле</option>
                                         <option value="number-field">Числовое поле</option>
                                     </checkbox-select> -->
                                 </div>
                                 <br>
-                                <div>
-                                    <span>Тип данных числового поля:</span>
-                                    <select name="" id="">
-                                        <option value="default">Любое число</option>
-                                        <option value="date">Дата [ДД:ММ:ГГГГ]</option>
-                                        <option value="money-byn">Сумма денег [BYN]</option>
-                                        <option value="money-rub">Сумма денег [RUB]</option>
-                                        <option value="phone+375">Номер телефона [+375(XX)XXX-XX-XX]</option>
-                                    </select>
-                                </div>
+                                <container for="#element-type">
+                                    <number-field>
+                                        <span>Тип данных числового поля:</span>
+                                        <custom-select name="" id="">
+                                            <option value="default">Любое число</option>
+                                            <option value="date">Дата [ДД:ММ:ГГГГ]</option>
+                                            <option value="money-byn">Сумма денег [BYN]</option>
+                                            <option value="money-rub">Сумма денег [RUB]</option>
+                                            <option value="phone+375">Номер телефона [+375(XX)XXX-XX-XX]</option>
+                                        </custom-select>
+                                    </number-field>
+                                </container>
                                 <br>
                                 <div>
                                     <span>Название поля:</span>
@@ -116,16 +126,18 @@
                             </div>
                         </div>
                     </modal-window>
-                    <button class="task-list__task_button" id="set-complete-options">Установить условия выполнения</button>
+                    <button class="task-list__task_button" id="set-complete-options">Установить условия
+                        выполнения</button>
                     <button class="task-list__task_button notification_settings_button">Настройки уведомления</button>
                     <button class="task-list__task_button add_task_button">Добавить задачу</button>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <script src="./dist/components/modal-window.js"></script>
     <script src="./dist/components/checkbox-select.js"></script>
+    <script src="./dist/components/custom-select.js"></script>
     <script>
         const checkboxSelect = document.querySelector('checkbox-select');
         checkboxSelect.addEventListener('option-click', (e) => {
@@ -145,7 +157,7 @@
             }
         });
         // checkboxSelect.addEventListener('expanded', () => {
-            // Доработать событие Expanded в checkbox-select.ts !!!
+        // Доработать событие Expanded в checkbox-select.ts !!!
         // });
 
         /* ПРОВЕРЕНО СОЗДАНИЕ ЭЛЕМЕНТА ModalWindow :: УСПЕШНО! Всё работает! */
@@ -160,4 +172,5 @@
 
     </script>
 </body>
+
 </html>
