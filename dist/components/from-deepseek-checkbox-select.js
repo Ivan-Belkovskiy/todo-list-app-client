@@ -1,5 +1,5 @@
 "use strict";
-class CheckboxSelect extends HTMLElement {
+class FromDeepSeekCheckboxSelect extends HTMLElement {
     isExpanded = false;
     selectedOptions = [];
     mainWrapper = document.createElement('div');
@@ -114,7 +114,7 @@ class CheckboxSelect extends HTMLElement {
             // if (!isClickInside) {
             this.collapseOptions();
             // }
-            // if ((e.target as CheckboxSelect) != this) {
+            // if ((e.target as FromDeepSeekCheckboxSelect) != this) {
             //   this.collapseOptions();
             // }
         });
@@ -124,7 +124,7 @@ class CheckboxSelect extends HTMLElement {
             this.collapseOptions();
         }
         else {
-            CheckboxSelect.openInstances.forEach(instance => {
+            FromDeepSeekCheckboxSelect.openInstances.forEach(instance => {
                 if (instance !== this)
                     instance.collapseOptions();
             });
@@ -136,13 +136,13 @@ class CheckboxSelect extends HTMLElement {
         this.isExpanded = true;
         this.optionsContainer.style.display = 'block';
         this.setAttribute('expanded', '');
-        CheckboxSelect.openInstances.push(this);
+        FromDeepSeekCheckboxSelect.openInstances.push(this);
     }
     collapseOptions() {
         this.isExpanded = false;
         this.optionsContainer.style.display = 'none';
         this.removeAttribute('expanded');
-        CheckboxSelect.openInstances = CheckboxSelect.openInstances.filter(inst => inst !== this);
+        FromDeepSeekCheckboxSelect.openInstances = FromDeepSeekCheckboxSelect.openInstances.filter(inst => inst !== this);
     }
     updateOptions() {
         // Получаем актуальные опции
@@ -270,4 +270,4 @@ class CheckboxSelect extends HTMLElement {
         this.appendChild(option);
     }
 }
-customElements.define('checkbox-select', CheckboxSelect);
+customElements.define('checkbox-select', FromDeepSeekCheckboxSelect);

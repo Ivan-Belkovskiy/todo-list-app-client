@@ -32,7 +32,7 @@
                             <option value="all-tasks" class="task-list__task_select-option">Все задачи</option>
                             <option value="add-new-category" class="task-list__task_select-option">+ Добавить категорию</option>
                         </select> -->
-                        <checkbox-select name="" id="" width="200">
+                        <checkbox-select name="" id="" width="300">
                             <option value="all-tasks" selected disabled>Все задачи</option>
                             <option value="add-new-category" button bottom>+ Добавить категорию</option>
                         </checkbox-select>
@@ -71,14 +71,60 @@
                             <option value="option-03" class="task-list__task_select-option"></option>
                         </select> -->
                     </div>
+                    <!-- Доработать компонент ModalWindow -->
+                    <modal-window class="task-list_task-modal set-complete-options-modal" modal-title="Установить условия выполнения задачи" type="modal" color="#ffffff" open-button="#set-complete-options" opened>
+                        <div style="position: relative;">
+                            <input type="text" name="" id="" placeholder="Введите &quot;Задача выполнена&quot; для подтверждения!" style="width: 350px;" disabled>
+                            <span> - </span>
+                            <span style="color: #ff0000">Это поле обязательное для заполнения при выполнении задачи!</span>
+                            <div style="
+                                border: solid 2px #000000;
+                                padding: 5px 0;
+                                margin-top: 10px;
+                            ">
+                                <span style="
+                                    display: inline-block;
+                                    margin: 5px 0 10px 0;
+                                ">Добавить новое условие:</span>
+                                <div>
+                                    <span>Тип элемента:</span>
+                                    <select>
+                                        <option value="text-field">Текстовое поле</option>
+                                        <option value="number-field">Числовое поле</option>
+                                    </select>
+                                    <!-- <checkbox-select>
+                                        <option value="text-field">Текстовое поле</option>
+                                        <option value="number-field">Числовое поле</option>
+                                    </checkbox-select> -->
+                                </div>
+                                <br>
+                                <div>
+                                    <span>Тип данных числового поля:</span>
+                                    <select name="" id="">
+                                        <option value="default">Любое число</option>
+                                        <option value="date">Дата [ДД:ММ:ГГГГ]</option>
+                                        <option value="money-byn">Сумма денег [BYN]</option>
+                                        <option value="money-rub">Сумма денег [RUB]</option>
+                                        <option value="phone+375">Номер телефона [+375(XX)XXX-XX-XX]</option>
+                                    </select>
+                                </div>
+                                <br>
+                                <div>
+                                    <span>Название поля:</span>
+                                    <input type="text">
+                                </div>
+                            </div>
+                        </div>
+                    </modal-window>
+                    <button class="task-list__task_button" id="set-complete-options">Установить условия выполнения</button>
                     <button class="task-list__task_button notification_settings_button">Настройки уведомления</button>
-                    <!-- <br>
-                    <br> -->
                     <button class="task-list__task_button add_task_button">Добавить задачу</button>
                 </div>
             </div>
         </div>
     </div>
+    
+    <script src="./dist/components/modal-window.js"></script>
     <script src="./dist/components/checkbox-select.js"></script>
     <script>
         const checkboxSelect = document.querySelector('checkbox-select');
@@ -101,6 +147,17 @@
         // checkboxSelect.addEventListener('expanded', () => {
             // Доработать событие Expanded в checkbox-select.ts !!!
         // });
+
+        /* ПРОВЕРЕНО СОЗДАНИЕ ЭЛЕМЕНТА ModalWindow :: УСПЕШНО! Всё работает! */
+
+        // const newModal = document.createElement('modal-window'); // Работает
+        // // const newModal = new ModalWindow(); // И это работает
+        // newModal.setAttribute('modal-title', 'Новое Модальное Окно!');
+        // newModal.setAttribute('open-button', '#set-complete-options');
+        // newModal.setAttribute('type', 'modal');
+        // newModal.setAttribute('opened', 'true');
+        // document.body.appendChild(newModal);
+
     </script>
 </body>
 </html>

@@ -52,10 +52,15 @@
     margin: 5px 0;
 }
 
+.task-list__task_input {
+    width: 250px;
+}
+
 input,
 button,
 select {
     cursor: pointer;
+    padding: 5px;
 }
 
 .task-list__checkbox-select {
@@ -73,6 +78,17 @@ select {
     min-width: 40px;
 }
 
+.set-complete-options-modal__new-option-block {
+    position: relative;
+    display: block;
+    border: solid 2px red;
+    width: 80%;
+    height: 10px;
+}
+
+:disabled {
+    cursor: not-allowed;
+}
 
 
 /****************************************************/
