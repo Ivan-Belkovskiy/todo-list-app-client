@@ -17,7 +17,12 @@ class CustomSelect extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' });
     this.observer = new MutationObserver(() => this.updateOptions());
-  } 
+    this.dispatchEvent(new CustomEvent('myevent', {
+      detail: {
+
+      }
+    }));
+  }
 
   connectedCallback() {
     this.initElement();
@@ -236,7 +241,7 @@ class CustomSelect extends HTMLElement {
 
     let resultWidth: number = 0;
 
-    console.log(this.shadowRoot!.querySelectorAll('.checkbox-select.option-item')[0].clientWidth);
+    // console.log(this.shadowRoot!.querySelectorAll('.checkbox-select.option-item')[0].clientWidth);
     const optionContainerDisplay: string = this.optionsContainer.style.display;
     this.optionsContainer.style.display = 'block';
     this.optionsContainer.style.width = '100vw';
@@ -254,7 +259,7 @@ class CustomSelect extends HTMLElement {
       }
     });
 
-    console.error('RESULT: ' + resultWidth);
+    // console.error('RESULT: ' + resultWidth);
     this.optionsContainer.style.display = optionContainerDisplay;
     this.optionsContainer.style.width = '100%';
 
@@ -269,7 +274,7 @@ class CustomSelect extends HTMLElement {
     }
   }
 
-  private updateValue(type?: string) {
+  public updateValue(type?: string) {
 
     let selectedText: string = EMPTY_VALUE_TEXT;
     if (type == 'checkbox') {
@@ -278,8 +283,9 @@ class CustomSelect extends HTMLElement {
     } else if (type == 'normal') {
       const selectedOptions = Array.from(this.querySelectorAll('option:checked'));
       selectedText = selectedOptions[0].textContent || EMPTY_VALUE_TEXT;
+      this.collapseOptions();
     } else {
-      
+
     }
 
     // this.value = this.innerText;
@@ -294,8 +300,37 @@ class CustomSelect extends HTMLElement {
     `;
 
     // this.setAttribute('value', selectedText);
+    // alert('123');
+    
+    // if (this.id == 'element-type') {
+    //   let thisElement: HTMLElement | null = document.querySelector(`${this.tagName.toLowerCase()}${this.id ? `#${this.id}` : ``}`);
+    //   console.log('This Element:');
+    //   console.log(thisElement);
+    //   console.log('this:');
+    //   console.log(this);
+    //   console.log('this == thisElement :: ' + (this == thisElement));
+    //   const newElement: ChildNode = Array.from(this.parentElement!.childNodes).filter((node) => (node == this))[0];
+    //   console.log('newElement == thisElement :: ' + (newElement == thisElement));
+    //   console.log('NEW ELEMENT:')
+    //   console.log(newElement);
+    //   // this.dispatchEvent(new CustomEvent('value-change', {
+    //   //   detail: {
+    //   //     temp: '123'
+    //   //   },
+    //   //   bubbles: true,
+    //   // }));
+    // }
+    // alert(`${this.tagName} :: Event Created: ${event}`);
     // this.value = String(this.getAttribute('value'));
     this.value = selectedText;
+    this.dispatchEvent(new CustomEvent('value-change', {
+      detail: {
+        value: selectedText,
+      },
+      bubbles: true,
+      composed: true,
+    }));
+    
     // console.log(this.value);
 
     const valueDisplaySpan: HTMLSpanElement | null = this.valueElement.querySelector('.checkbox-select.value-display-span');

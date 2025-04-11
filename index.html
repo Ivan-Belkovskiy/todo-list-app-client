@@ -96,18 +96,22 @@
                                 ">Добавить новое условие:</span>
                                 <div>
                                     <span>Тип элемента:</span>
+
                                     <custom-select type="normal" id="element-type">
                                         <option value="text-field">Текстовое поле</option>
                                         <option value="number-field">Числовое поле</option>
                                     </custom-select>
+
+
                                     <!-- <checkbox-select>
                                         <option value="text-field">Текстовое поле</option>
                                         <option value="number-field">Числовое поле</option>
                                     </checkbox-select> -->
                                 </div>
-                                <br>
-                                <container for="#element-type">
-                                    <number-field>
+                                <!-- <br> -->
+                                <block-switch for="#element-type">
+                                    <block-switch-option value="number-field">
+                                        <br>
                                         <span>Тип данных числового поля:</span>
                                         <custom-select name="" id="">
                                             <option value="default">Любое число</option>
@@ -116,9 +120,14 @@
                                             <option value="money-rub">Сумма денег [RUB]</option>
                                             <option value="phone+375">Номер телефона [+375(XX)XXX-XX-XX]</option>
                                         </custom-select>
-                                    </number-field>
-                                </container>
-                                <br>
+                                        <br>
+                                        <br>
+                                    </block-switch-option>
+                                    <block-switch-option other-value>
+                                        <br>
+                                    </block-switch-option:else>
+                                </block-switch>
+                                <!-- <br> -->
                                 <div>
                                     <span>Название поля:</span>
                                     <input type="text">
@@ -133,11 +142,16 @@
                 </div>
             </div>
         </div>
+        <!-- <custom-select type="normal" id="element-type">
+            <option value="text-field">Текстовое поле</option>
+            <option value="number-field">Числовое поле</option>
+        </custom-select> -->
     </div>
 
-    <script src="./dist/components/modal-window.js"></script>
-    <script src="./dist/components/checkbox-select.js"></script>
-    <script src="./dist/components/custom-select.js"></script>
+    <script src="./dist/components/modal-window.js" defer></script>
+    <script src="./dist/components/checkbox-select.js" defer></script>
+    <script src="./dist/components/custom-select.js" defer></script>
+    <script src="./dist/components/block-switch.js" defer></script>
     <script>
         const checkboxSelect = document.querySelector('checkbox-select');
         checkboxSelect.addEventListener('option-click', (e) => {
@@ -158,6 +172,11 @@
         });
         // checkboxSelect.addEventListener('expanded', () => {
         // Доработать событие Expanded в checkbox-select.ts !!!
+        // });
+
+        // const customSelect = document.querySelector('custom-select#element-type');
+        // customSelect.addEventListener('option-click', (e) => {
+        //     alert('Change!');
         // });
 
         /* ПРОВЕРЕНО СОЗДАНИЕ ЭЛЕМЕНТА ModalWindow :: УСПЕШНО! Всё работает! */

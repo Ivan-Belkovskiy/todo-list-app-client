@@ -182,7 +182,7 @@ class ModalWindow extends HTMLElement {
                         <div class="modal-content__top">
                             <h2>${this.getAttribute('modal-title')}</h2>
                             <div class="modal-inner-content">
-                                ${this.innerHTML}
+                                <slot></slot>
                             </div>
                         </div>
                         <div class="modal-content__bottom">

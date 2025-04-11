@@ -197,7 +197,7 @@ class CheckboxSelect extends HTMLElement {
       });
 
       textSpan.addEventListener('click', () => {
-        console.error(textSpan.clientWidth);
+        // console.error(textSpan.clientWidth);
       });
 
       (Boolean(option.hasAttribute('button')) == true) ? optionItem.append(textSpan) : optionItem.append(checkbox, textSpan);
@@ -216,27 +216,27 @@ class CheckboxSelect extends HTMLElement {
 
     let resultWidth: number = 0;
 
-    console.log(this.shadowRoot!.querySelectorAll('.checkbox-select.option-item')[0].clientWidth);
+    // console.log(this.shadowRoot!.querySelectorAll('.checkbox-select.option-item')[0].clientWidth);
     const optionContainerDisplay: string = this.optionsContainer.style.display;
     this.optionsContainer.style.display = 'block';
     this.optionsContainer.style.width = '100vw';
     const generatedOptions: HTMLElement[] = Array.from(this.shadowRoot!.querySelectorAll('.checkbox-select.option-item'));
     generatedOptions.forEach((element: HTMLElement, index: number) => {
-      // console.log(element.clientWidth);
-      // console.log(element);
+      // // console.log(element.clientWidth);
+      // // console.log(element);
       const span: HTMLSpanElement | null = element.querySelector('.checkbox-select.option-span');
       if (!(span instanceof HTMLSpanElement)) return;
       const tmpInnTxt: string | null = span.innerText;
-      // console.error(span);
+      // // console.error(span);
       span.innerText = `${tmpInnTxt}, `; // Для того, чтобы рассчитать ширину опции с запятой (как будет отображаться в теге <checkbox-select>)
-      // console.error(span?.textContent);
-      // console.error('SPAN CLIENTWIDTH: ' + span.clientWidth);
-      console.error(span);
+      // // console.error(span?.textContent);
+      // // console.error('SPAN CLIENTWIDTH: ' + span.clientWidth);
+      // console.error(span);
       resultWidth += span.clientWidth;
-      console.log(`option #${index}.clientWidth:\n` + span.clientWidth);
+      // console.log(`option #${index}.clientWidth:\n` + span.clientWidth);
       span.innerText = tmpInnTxt;
     });
-    console.error('RESULT: ' + resultWidth);
+    // console.error('RESULT: ' + resultWidth);
     this.optionsContainer.style.display = optionContainerDisplay;
     this.optionsContainer.style.width = '100%';
 
