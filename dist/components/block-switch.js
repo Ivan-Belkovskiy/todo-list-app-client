@@ -37,10 +37,10 @@ class BlockSwitch extends HTMLElement {
                 if (forElement instanceof Element) {
                     // const thisChildNodes: HTMLElement[] = Array.from(this.shadowRoot!.querySelectorAll('block-switch-option'));
                     const thisChildNodes = Array.from(this.querySelectorAll('block-switch-option'));
-                    console.info('THIS CHILD NODES!');
+                    // console.info('THIS CHILD NODES!');
                     console.log(thisChildNodes);
                     const forChildNodes = Array.from(forElement.childNodes);
-                    console.log(forChildNodes);
+                    // console.log({...forChildNodes});
                     forChildNodes.forEach((node) => {
                         // if (node instanceof HTMLElement) {
                         //     // console.log(node.tagName);
@@ -52,12 +52,13 @@ class BlockSwitch extends HTMLElement {
                             // }
                             const element = this.querySelector(`block-switch-option[value="${node.value}"]:not(other-value)`);
                             const otherValue = this.querySelector(`block-switch-option[other-value]`);
+                            // console.log(otherValue);
                             if (element instanceof HTMLElement) {
                                 // if (thisChildNodes.includes(node.value)) {
                                 if (thisChildNodes.includes(element)) {
                                     element.style.display = (node.selected) ? OPTION_STYLE_DISPLAY : 'none';
-                                    if (otherValue instanceof HTMLElement && node.selected)
-                                        otherValue.style.display = 'none';
+                                    if (otherValue instanceof HTMLElement)
+                                        otherValue.style.display = (node.selected ? 'none' : OPTION_STYLE_DISPLAY);
                                 }
                                 else {
                                     element.style.display = 'none';
