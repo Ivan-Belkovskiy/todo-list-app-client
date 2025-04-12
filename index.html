@@ -113,7 +113,7 @@
                                     <block-switch-option value="number-field">
                                         <br>
                                         <span>Тип данных числового поля:</span>
-                                        <custom-select name="" id="">
+                                        <custom-select name="" id="number-field-data-type">
                                             <option value="default">Любое число</option>
                                             <option value="date">Дата [ДД:ММ:ГГГГ]</option>
                                             <option value="money-byn">Сумма денег [BYN]</option>
@@ -125,13 +125,40 @@
                                     </block-switch-option>
                                     <block-switch-option other-value>
                                         <br>
-                                    </block-switch-option:else>
+                                    </block-switch-option>
                                 </block-switch>
                                 <!-- <br> -->
                                 <div>
                                     <span>Название поля:</span>
                                     <input type="text">
                                 </div>
+                                <block-switch for="#element-type">
+                                    <block-switch-option value="number-field">
+                                        <br>
+                                        <span>Ожидаемое значение:</span>
+                                        <block-switch for="#number-field-data-type">
+                                            <block-switch-option value="default">
+                                                <input type="number" style=" padding: 5px;">
+                                            </block-switch-option>
+                                            <block-switch-option value="date">
+                                                <input type="date" style=" padding: 5px;">
+                                            </block-switch-option>
+                                            <block-switch-option value="phone+375">
+                                                <input type="tel" style=" padding: 5px;" placeholder="+375(XX)XXX-XX-XX">
+                                                <!-- В дальнейшем вместо тега <input> создать и использовать компонент <custom-input> -->
+                                            </block-switch-option>
+                                        </block-switch>
+                                        <br>
+                                        <br>
+                                    </block-switch-option>
+                                    <block-switch-option other-value>
+                                        <br>
+                                        <span>Ожидаемое значение:</span>
+                                        <input type="text" style=" padding: 5px;">
+                                        <br>
+                                        <br>
+                                    </block-switch-option>
+                                </block-switch>
                             </div>
                         </div>
                     </modal-window>
